@@ -26,6 +26,12 @@ const changeAccount = (account: MainFormRowData) => {
 </script>
 <template>
   <div class="form-data">
+    <div class="form-data__title">
+      <span>Метки</span>
+      <span>Тип записи</span>
+      <span>Логин</span>
+      <span>Пароль</span>
+    </div>
     <FormRow v-for="row in data" :key="row.id" :data="row" @remove="removeAccount" @change-account="changeAccount" />
   </div>
 </template>
@@ -35,5 +41,16 @@ const changeAccount = (account: MainFormRowData) => {
   flex-flow: column nowrap;
   gap: 10px;
 
+  &__title {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 10px 0;
+
+    &>* {
+      flex: 0 0 auto;
+      width: 24%;
+      padding: 0 5px;
+    }
+  }
 }
 </style>

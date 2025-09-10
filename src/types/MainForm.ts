@@ -1,6 +1,6 @@
 interface MainFormRowData {
   id: number
-  tags: Array<string>
+  tags: Array<{ text: string }>
   accountType: 'local' | 'LDAP'
   credentials: MainFormRowDataCredentials
 }
