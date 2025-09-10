@@ -3,9 +3,9 @@ export const validateTags = (s: string) => {
 }
 
 export const validateLogin = (s: string) => {
-  return s.length <= 100
+  return s.length > 0 && s.length <= 100
 }
 
 export const validatePassword = (s: string) => {
-  return s.length <= 100
+  return s.length > 0 && s.length <= 100
 }

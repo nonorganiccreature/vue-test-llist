@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { MainFormRowData } from '@/types';
-import { validateTags } from '@/utils';
+import { validateLogin, validatePassword, validateTags } from '@/utils';
 import { InputText, Select, type SelectChangeEvent, Button, Password } from 'primevue';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 interface ValidationPassed {
   login: boolean
@@ -44,12 +44,38 @@ const accountTypesOptions = [
   }
 ]
 
-const onInputBlur = (e: Event, inputType: keyof ValidationPassed) => {
-  const target = <HTMLInputElement>e.target
+onMounted(() => {
+  validateInputData(preparedData.value.tags, 'tags')
+  validateInputData(preparedData.value.credentials.login, 'login')
 
-  if (!validateTags(target.value)) {
-    validationPassed.value[inputType] = false
+  if (preparedData.value.credentials.password !== null) {
+    validateInputData(preparedData.value.credentials.password, 'password')
   }
+})
+
+const validateInputData = (value: string, inputType: keyof ValidationPassed) => {
+  if (inputType === 'tags') {
+    if (!validateTags(value)) {
+      validationPassed.value[inputType] = false
+    }
+  }
+
+  if (inputType === 'login') {
+    if (!validateLogin(value)) {
+      validationPassed.value[inputType] = false
+    }
+  }
+
+  if (inputType === 'password') {
+    if (!validatePassword(value)) {
+      validationPassed.value[inputType] = false
+    }
+  }
+}
+
+const onInputBlur = (e: Event, inputType: keyof ValidationPassed) => {
+  const { value } = <HTMLInputElement>e.target
+  validateInputData(value, inputType)
 }
 
 const onInputChange = (e: Event, inputType: keyof ValidationPassed) => {
@@ -131,8 +157,23 @@ const onClickRemove = (id: ComponentEmits['remove'][0]) => {
   gap: $row-gap;
   width: 100%;
 
-  &>.validation-failed {
+  &>input.validation-failed {
     outline: 1px solid #ff5e5e;
+    border: transparent;
+
+    :deep(input) {
+      &>input.validation-failed {
+        outline: 1px solid #ff5e5e;
+        border: transparent;
+      }
+    }
+  }
+
+  &>.validation-failed {
+    :deep(input) {
+      outline: 1px solid #ff5e5e;
+      border: transparent;
+    }
   }
 
   &>&__grow-input {
