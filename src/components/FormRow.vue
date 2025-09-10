@@ -54,20 +54,22 @@ const onInputBlur = (e: Event, inputType: keyof ValidationPassed) => {
 
 const onInputChange = (e: Event, inputType: keyof ValidationPassed) => {
   const target = <HTMLInputElement>e.target
+  const { value } = target
 
   if (inputType === 'tags') {
     validationPassed.value.tags = true
+    emit('changeAccount', { ...props.data, tags: target.value.split(';').filter(s => s !== '').map(tag => ({ text: tag })) })
   }
 
   if (inputType === 'login') {
     validationPassed.value.login = true
+    emit('changeAccount', { ...props.data, credentials: { ...props.data.credentials, login: value } })
   }
 
   if (inputType === 'password') {
     validationPassed.value.password = true
+    emit('changeAccount', { ...props.data, credentials: { ...props.data.credentials, password: value } })
   }
-
-  emit('changeAccount', { ...props.data, tags: target.value.split(';').filter(s => s !== '').map(tag => ({ text: tag })) })
 }
 
 const onAccountTypeChange = (e: SelectChangeEvent) => {
