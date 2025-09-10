@@ -2,16 +2,12 @@ interface MainFormRowData {
   id: number
   tags: Array<string>
   accountType: 'local' | 'LDAP'
-  data: MainFormRowDataLocal | MainFormRowDataLDAP
+  credentials: MainFormRowDataCredentials
 }
 
-interface MainFormRowDataLocal {
+interface MainFormRowDataCredentials {
   login: string
-  password: string
+  password: string | null
 }
 
-interface MainFormRowDataLDAP {
-  login: string
-}
-
-export type { MainFormRowData, MainFormRowDataLocal, MainFormRowDataLDAP }
+export type { MainFormRowData, MainFormRowDataCredentials }

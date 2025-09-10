@@ -1,1 +1,1 @@
-export type { MainFormRowData, MainFormRowDataLocal, MainFormRowDataLDAP } from './MainForm'
+export type { MainFormRowData, MainFormRowDataCredentials } from './MainForm'

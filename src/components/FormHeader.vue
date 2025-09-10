@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import CButton from 'primevue/button'
+import Button from 'primevue/button'
 
 interface ComponentEmits {
-  addAccount: []
+  addEmptyAccount: []
 }
 
 const emit = defineEmits<ComponentEmits>()
@@ -14,7 +14,7 @@ const emit = defineEmits<ComponentEmits>()
       <h2>Учетные записи</h2>
     </div>
     <div class="form-header__button">
-      <CButton icon="pi pi-home" aria-label="Save" @click="emit('addAccount')"></CButton>
+      <Button icon="pi pi-plus" aria-label="Save" @click="emit('addEmptyAccount')"></Button>
     </div>
   </div>
 </template>

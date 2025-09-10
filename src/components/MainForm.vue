@@ -1,23 +1,41 @@
 <script setup lang="ts">
-import { useFormDataStore } from '@/stores/MainFormData';
 import FormData from './FormData.vue';
 import FormHeader from './FormHeader.vue'
+import type { MainFormRowData } from '@/types';
 
-const formDataStore = useFormDataStore()
+interface ComponentProps {
+  data: Array<MainFormRowData>
+}
 
+interface ComponentEmits {
+  addEmptyAccount: []
+  remove: [MainFormRowData['id']]
+  changeAccount: [MainFormRowData]
+}
+
+const props = defineProps<ComponentProps>()
+
+const emit = defineEmits<ComponentEmits>()
+
+const removeAccount = (id: MainFormRowData['id']) => {
+  emit('remove', id)
+}
+
+const changeAccount = (account: MainFormRowData) => {
+  emit('changeAccount', account)
+}
 </script>
 <template>
   <div class="main-form">
-    <FormHeader />
-    <FormData :data="formDataStore.data" />
+    <FormHeader @add-empty-account="emit('addEmptyAccount')" />
+    <FormData :data="data" @remove="removeAccount" @change-account="changeAccount" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.form {
+.main-form {
   display: flex;
   flex-flow: column nowrap;
-  gap: 10px;
-
+  width: 100%;
 }
 </style>

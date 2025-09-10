@@ -9,7 +9,7 @@ export const useFormDataStore = defineStore('formData', () => {
     data.value.push({
       id: Math.floor(Math.random() * 2048),
       tags: [],
-      data: {
+      credentials: {
         login: '',
         password: '',
       },
@@ -17,9 +17,13 @@ export const useFormDataStore = defineStore('formData', () => {
     })
   }
 
+  const removeAccount = (id: MainFormRowData['id']) => {
+    data.value = data.value.filter((account) => account.id !== id)
+  }
+
   addEmptyAccount()
   addEmptyAccount()
   addEmptyAccount()
 
-  return { data, addAccount: addEmptyAccount }
+  return { data, addEmptyAccount, removeAccount }
 })
