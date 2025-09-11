@@ -15,7 +15,6 @@ const removeAccount = (id: MainFormRowData['id']) => {
 
 const changeAccount = (acc: MainFormRowData) => {
   const index = formDataStore.data.findIndex((account) => account.id === acc.id)
-  console.log(acc)
   formDataStore.data[index] = { ...acc }
 }
 </script>

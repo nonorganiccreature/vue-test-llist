@@ -44,13 +44,14 @@ const accountTypesOptions = [
   }
 ]
 
-onMounted(() => {
+const validateAll = () => {
   validateInputData(preparedData.value.tags, 'tags')
   validateInputData(preparedData.value.credentials.login, 'login')
+  validateInputData(preparedData.value.credentials.password || '', 'password')
+}
 
-  if (preparedData.value.credentials.password !== null) {
-    validateInputData(preparedData.value.credentials.password, 'password')
-  }
+onMounted(() => {
+  validateAll()
 })
 
 const validateInputData = (value: string, inputType: keyof ValidationPassed) => {
@@ -118,6 +119,8 @@ const onAccountTypeChange = (e: SelectChangeEvent) => {
   if (value === 'local') {
     emit('changeAccount', { ...props.data, accountType: value })
   }
+
+  validateAll()
 }
 
 const onClickRemove = (id: ComponentEmits['remove'][0]) => {
