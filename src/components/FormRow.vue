@@ -54,13 +54,13 @@ const accountTypesOptions = [
 ]
 
 const highlightAllValidation = () => {
-  highlightValidationInputData(preparedData.value.tags, 'tags')
-  highlightValidationInputData(preparedData.value.credentials.login, 'login')
-  highlightValidationInputData(preparedData.value.credentials.password || '', 'password')
+  highlightValidationInputData(tags.value, 'tags')
+  highlightValidationInputData(login.value, 'login')
+  highlightValidationInputData(password.value || '', 'password')
 }
 
 onMounted(() => {
-  highlightAllValidation()
+  // highlightAllValidation()
 })
 
 const highlightValidationInputData = (value: string, inputType: keyof ShowValidationError) => {
