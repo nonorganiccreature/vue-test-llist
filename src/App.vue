@@ -2,7 +2,6 @@
 import MainForm from './components/MainForm.vue';
 import { useFormDataStore } from './stores/MainFormData';
 
-
 const formDataStore = useFormDataStore()
 </script>
 
