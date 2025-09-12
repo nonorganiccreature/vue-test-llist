@@ -59,10 +59,6 @@ const highlightAllValidation = () => {
   highlightValidationInputData(password.value || '', 'password')
 }
 
-onMounted(() => {
-  // highlightAllValidation()
-})
-
 const highlightValidationInputData = (value: string, inputType: keyof ShowValidationError) => {
 
   if (inputType === 'tags') {
@@ -96,19 +92,21 @@ const onFocus = (e: Event, inputType: keyof ShowValidationError) => {
 
 const onBlur = (e: Event, inputType: keyof ShowValidationError) => {
   const { value } = <HTMLInputElement>e.target
+
   highlightValidationInputData(value, inputType)
+  updateData(inputType)
 }
 
-const onInput = (e: Event, inputType: keyof ShowValidationError) => {
-  if (inputType === 'tags') {
+const updateData = (inputType: keyof ShowValidationError) => {
+  if (inputType === 'tags' && !validatedData.errors.value['tags']) {
     emit('changeAccount', { ...props.data, tags: tags.value.split(';').filter(s => s !== '').map(tag => ({ text: tag })) })
   }
 
-  if (inputType === 'login') {
+  if (inputType === 'login' && !validatedData.errors.value['login']) {
     emit('changeAccount', { ...props.data, credentials: { ...props.data.credentials, login: login.value } })
   }
 
-  if (inputType === 'password') {
+  if (inputType === 'password' && !validatedData.errors.value['password']) {
     emit('changeAccount', { ...props.data, credentials: { ...props.data.credentials, password: password.value } })
   }
 }
@@ -145,20 +143,18 @@ const onClickRemove = (id: ComponentEmits['remove'][0]) => {
 <template>
   <div class="form-row">
     <InputText :class="[{ 'validation-failed': showValidationError.tags }]" v-model="tags"
-      @input="e => onInput(e, 'tags')" @blur="e => onBlur(e, 'tags')" @focus="e => onFocus(e, 'tags')" />
+      @blur="e => onBlur(e, 'tags')" @focus="e => onFocus(e, 'tags')" />
     <Select :model-value="preparedData.accountType" @change="onAccountTypeChange" :options="accountTypesOptions"
       optionLabel="name" optionValue="value" class="w-full md:w-56" />
     <template v-if="preparedData.accountType === 'local'">
       <InputText :class="[{ 'validation-failed': showValidationError.login }]" v-model="login"
-        @input="e => onInput(e, 'login')" @blur="e => onBlur(e, 'login')" @focus="e => onFocus(e, 'login')" />
+        @blur="e => onBlur(e, 'login')" @focus="e => onFocus(e, 'login')" />
       <Password :class="[{ 'validation-failed': showValidationError.password }]" v-model="password"
-        @change="e => onInput(e, 'password')" @blur="e => onBlur(e, 'password')" @focus="e => onFocus(e, 'password')"
-        toggle-mask />
+        @blur="e => onBlur(e, 'password')" @focus="e => onFocus(e, 'password')" toggle-mask />
     </template>
     <template v-else>
       <InputText :class="[{ 'validation-failed': showValidationError.login }]" class="form-row__grow-input"
-        v-model="login" @change="e => onInput(e, 'login')" @blur="e => onBlur(e, 'login')"
-        @focus="e => onFocus(e, 'login')" />
+        v-model="login" @blur="e => onBlur(e, 'login')" @focus="e => onFocus(e, 'login')" />
     </template>
     <div class="form-row__button-flex-wrapper">
       <Button icon="pi pi-trash" aria-label="Delete" @click="onClickRemove(preparedData.id)"></Button>
