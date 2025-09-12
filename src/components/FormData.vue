@@ -12,6 +12,7 @@ interface ComponentProps {
   data: Array<MainFormRowData>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<ComponentProps>()
 
 const emit = defineEmits<ComponentEmits>()

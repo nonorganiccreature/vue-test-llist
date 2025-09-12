@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useFormDataStore } from '@/stores/MainFormData';
 import FormData from './FormData.vue';
 import FormHeader from './FormHeader.vue'
 import type { MainFormRowData } from '@/types';

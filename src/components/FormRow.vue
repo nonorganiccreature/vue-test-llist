@@ -3,7 +3,7 @@ import { useValidation } from '@/composables';
 import type { MainFormRowData } from '@/types';
 import { validateLogin, validatePassword, validateTags } from '@/utils';
 import { InputText, Select, type SelectChangeEvent, Button, Password } from 'primevue';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 interface ShowValidationError {
   login: boolean
